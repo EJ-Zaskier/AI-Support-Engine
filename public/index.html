@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Support Engine</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="top">
+        <h1>AI Support Engine</h1>
+        <p class="sub">Clasificación de solicitudes de soporte: motor por reglas vs. motor generativo.</p>
+        <p id="health" class="health">Verificando motores…</p>
+      </header>
+
+      <section class="panel">
+        <label for="message">Solicitud del usuario</label>
+        <textarea id="message" rows="4" maxlength="2000" placeholder="Ej. No puedo iniciar sesión, me dice que mi contraseña es incorrecta"></textarea>
+        <div class="examples" id="examples" aria-label="Ejemplos"></div>
+        <div class="actions">
+          <button data-mode="traditional" class="btn">Motor tradicional</button>
+          <button data-mode="generative" class="btn">Motor generativo</button>
+          <button data-mode="both" class="btn primary">Comparar ambos</button>
+        </div>
+      </section>
+
+      <section class="results" id="results" aria-live="polite"></section>
+    </main>
+    <script src="main.js" type="module"></script>
+  </body>
+</html>
