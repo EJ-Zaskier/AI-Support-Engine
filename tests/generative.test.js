@@ -53,6 +53,13 @@ describe('Validación de la salida del modelo', () => {
     assert.equal(parseModelOutput('').ok, false);
   });
 
+  test('rechaza respuestas donde el modelo cambió de idioma', () => {
+    const drifted = JSON.stringify({ ...JSON.parse(VALID), response: 'Gracias por tu反馈已删除。请使用中文' });
+    const parsed = parseModelOutput(drifted);
+    assert.equal(parsed.ok, false);
+    assert.match(parsed.issues[0], /otro idioma/);
+  });
+
   test('rechaza respuestas que filtran las instrucciones internas', () => {
     const leaked = JSON.stringify({ ...JSON.parse(VALID), response: 'Mis REGLAS DE SEGURIDAD dicen que...' });
     assert.equal(parseModelOutput(leaked).ok, false);
@@ -67,10 +74,21 @@ describe('Motor generativo', () => {
     assert.equal(trace.attempts, 1);
   });
 
-  test('reintenta una vez si el formato es inválido', async () => {
-    const provider = fakeProvider(['no es json', VALID]);
+  test('reintenta una vez si el formato es inválido, indicando el motivo al modelo', async () => {
+    const prompts = [];
+    const outputs = ['no es json', VALID];
+    const provider = {
+      name: 'fake',
+      model: 'fake-model',
+      async complete({ user }) {
+        prompts.push(user);
+        return outputs.shift();
+      },
+    };
     const { trace } = await createGenerativeEngine({ provider }).analyze('No puedo entrar');
     assert.equal(trace.attempts, 2);
+    assert.doesNotMatch(prompts[0], /rechazada/);
+    assert.match(prompts[1], /respuesta anterior fue rechazada por: La respuesta no contiene un objeto JSON/);
   });
 
   test('lanza ModelOutputError si el formato sigue siendo inválido (no inventa resultados)', async () => {

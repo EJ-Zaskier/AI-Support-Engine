@@ -38,13 +38,26 @@ FORMATO: responde únicamente con un objeto JSON con exactamente estas claves:
 
 const DELIMITER_TAG = /<\/?\s*solicitud\s*>/gi;
 
-export function buildUserPrompt(message) {
+/**
+ * Construye el mensaje de usuario. En un reintento se agrega el motivo del rechazo
+ * para que el modelo corrija su salida (con temperature 0, repetir el mismo prompt
+ * produciría exactamente la misma respuesta inválida).
+ */
+export function buildUserPrompt(message, previousIssues = null) {
   const safeMessage = message.replace(DELIMITER_TAG, '[etiqueta eliminada]');
-  return `Clasifica la siguiente solicitud de soporte.\n<solicitud>\n${safeMessage}\n</solicitud>`;
+  const prompt = `Clasifica la siguiente solicitud de soporte.\n<solicitud>\n${safeMessage}\n</solicitud>`;
+  if (!previousIssues?.length) return prompt;
+  return (
+    `${prompt}\n\nIMPORTANTE: tu respuesta anterior fue rechazada por: ${previousIssues.join('; ')}. ` +
+    'Responde de nuevo únicamente con el objeto JSON válido y con "response" escrito solo en español.'
+  );
 }
 
 // Fragmentos del prompt interno que nunca deberían aparecer en la respuesta al usuario.
 const LEAK_MARKERS = ['REGLAS DE SEGURIDAD', 'requiresHumanReview', '<solicitud>', 'Eres el motor de clasificación'];
+
+// Alfabetos que indican que el modelo cambió de idioma (chino, japonés, coreano, cirílico, árabe).
+const FOREIGN_SCRIPT = /[Ѐ-ӿ؀-ۿ぀-ヿ㐀-䶿一-鿿가-힯＀-￯]/;
 
 function extractJsonObject(raw) {
   const withoutFences = raw.replace(/```(?:json)?/gi, '').trim();
@@ -80,6 +93,10 @@ export function parseModelOutput(raw) {
   const leak = LEAK_MARKERS.find((marker) => parsed.data.response.includes(marker));
   if (leak) return { ok: false, issues: ['La respuesta expone instrucciones internas'] };
 
+  if (FOREIGN_SCRIPT.test(parsed.data.response)) {
+    return { ok: false, issues: ['el campo response contiene texto en otro idioma'] };
+  }
+
   return { ok: true, data: parsed.data };
 }
 
@@ -92,7 +109,7 @@ export function createGenerativeEngine({ provider, maxAttempts = 2 }) {
         // Los errores de conexión/timeout del proveedor se propagan tal cual (503/504).
         const raw = await provider.complete({
           system: SYSTEM_PROMPT,
-          user: buildUserPrompt(message),
+          user: buildUserPrompt(message, issuesPerAttempt.at(-1)),
           jsonSchema: MODEL_OUTPUT_JSON_SCHEMA,
         });
         const parsed = parseModelOutput(raw);
