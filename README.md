@@ -24,7 +24,7 @@ Ambos clasifican cada solicitud en `ACCESS`, `BUG`, `FEATURE` o `SECURITY`, asig
 ## Instalación y ejecución
 
 ```bash
-git clone https://github.com/Ej-Zaskier/AI-Support-Engine.git
+git clone https://github.com/EJ-Zaskier/AI-Support-Engine.git
 cd AI-Support-Engine
 npm install
 cp .env.example .env          # en Windows (cmd): copy .env.example .env
