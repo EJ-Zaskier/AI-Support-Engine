@@ -15,7 +15,7 @@ import { AnalysisResultSchema } from '../src/contract.js';
 import { loadConfig } from '../src/config.js';
 import { createRuntime } from '../src/runtime.js';
 
-const MODES = ['traditional', 'generative'];
+const MODES = ['traditional', 'ml', 'generative'];
 const EVIDENCE_DIR = new URL('../evidence/', import.meta.url);
 const cases = JSON.parse(await readFile(new URL('./cases.json', import.meta.url), 'utf8'));
 
@@ -43,8 +43,9 @@ async function analyze(message, mode) {
 
 const health = await (await fetch(`${baseUrl}/api/health`)).json();
 const generative = health.engines.generative;
-if (!generative.available) {
-  console.error(`El motor generativo no está disponible: ${generative.reason}`);
+const ml = health.engines.ml;
+if (!generative.available || !ml?.available) {
+  console.error(`Motor no disponible -> generativo: ${generative.reason ?? 'ok'} | ml: ${ml?.reason ?? 'ok'}`);
   console.error('No se ejecuta el benchmark para no registrar resultados incompletos.');
   server?.close();
   process.exit(1);
@@ -109,6 +110,7 @@ const meta = {
   generatedAt: new Date().toISOString(),
   provider: generative.provider,
   model: generative.model,
+  mlModel: `${ml.algorithm} · ${ml.datasetRows} ejemplos · scikit-learn ${ml.sklearnVersion}`,
   node: process.version,
   platform: `${os.type()} ${os.release()}`,
   criteria: 'Correcto = categoría y prioridad coinciden con la referencia definida en benchmark/cases.json',
@@ -148,6 +150,7 @@ function renderMarkdown(metaInfo, summaryData, rows) {
     '',
     `- Fecha de ejecución: ${metaInfo.generatedAt}`,
     `- Motor generativo: ${metaInfo.provider} / \`${metaInfo.model}\``,
+    `- Motor ML: ${metaInfo.mlModel}`,
     `- Node.js ${metaInfo.node} — ${metaInfo.platform}`,
     `- Criterio: ${metaInfo.criteria}`,
     '',
@@ -162,13 +165,12 @@ function renderMarkdown(metaInfo, summaryData, rows) {
     '',
     '## Detalle por caso',
     '',
-    '| # | Tipo | Solicitud | Referencia | Tradicional | Formato | Correcto | Generativo | Formato | Correcto |',
-    '|---|---|---|---|---|---|---|---|---|---|',
+    `| # | Tipo | Solicitud | Referencia | ${MODES.map((m) => `${m} | Formato | Correcto`).join(' | ')} |`,
+    `|---|---|---|---|${MODES.map(() => '---|---|---').join('|')}|`,
     ...rows.map(
       (r) =>
         `| ${r.id} | ${r.type} | ${escape(r.message)} | ${r.expected.category} / ${r.expected.priority} | ` +
-        `${cell(r.traditional)} | ${yes(r.traditional.formatOk)} | ${yes(r.traditional.correct)} | ` +
-        `${cell(r.generative)} | ${yes(r.generative.formatOk)} | ${yes(r.generative.correct)} |`,
+        `${MODES.map((m) => `${cell(r[m])} | ${yes(r[m].formatOk)} | ${yes(r[m].correct)}`).join(' | ')} |`,
     ),
     '',
     '## Respuestas generadas por el motor generativo',

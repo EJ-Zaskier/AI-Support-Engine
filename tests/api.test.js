@@ -4,7 +4,10 @@ import { after, before, describe, test } from 'node:test';
 import { createApp } from '../src/app.js';
 import { AnalysisResultSchema } from '../src/contract.js';
 import { createGenerativeEngine } from '../src/engines/generative.js';
+import { createMlEngine, loadMlModel } from '../src/engines/ml.js';
 import { createTraditionalEngine } from '../src/engines/traditional.js';
+
+const mlModel = loadMlModel(new URL('../ml/model.json', import.meta.url));
 import { ProviderTimeoutError, ProviderUnavailableError } from '../src/errors.js';
 
 const silentLogger = { info() {}, warn() {}, error() {} };
@@ -37,6 +40,7 @@ async function start(config = { rateLimitPerMinute: 1000 }) {
   const app = createApp({
     engines: {
       traditional: createTraditionalEngine(),
+      ml: createMlEngine({ model: mlModel }),
       generative: createGenerativeEngine({ provider: scriptedProvider }),
     },
     provider: scriptedProvider,
@@ -69,6 +73,14 @@ describe('POST /api/analyze', () => {
     assert.ok(AnalysisResultSchema.safeParse(body).success);
     assert.equal(body.mode, 'traditional');
     assert.equal(body.category, 'ACCESS');
+  });
+
+  test('modo ml responde con el mismo contrato', async () => {
+    const res = await post({ message: 'La aplicación se congela al subir una foto', mode: 'ml' });
+    assert.equal(res.status, 200);
+    const body = await res.json();
+    assert.ok(AnalysisResultSchema.safeParse(body).success);
+    assert.equal(body.mode, 'ml');
   });
 
   test('modo generative responde con el mismo contrato', async () => {

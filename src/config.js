@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+
 // Configuración leída de variables de entorno (.env). Las credenciales nunca se
 // escriben en el código: OPENAI_API_KEY solo existe en memoria y no se expone.
 const SUPPORTED_PROVIDERS = ['ollama', 'openai-compatible'];
@@ -21,6 +23,7 @@ export function loadConfig(env = process.env) {
     host: env.HOST ?? '127.0.0.1',
     port: toPositiveInt(env.PORT, 3000),
     rateLimitPerMinute: toPositiveInt(env.RATE_LIMIT_PER_MINUTE, 60),
+    mlModelPath: env.ML_MODEL_PATH ?? fileURLToPath(new URL('../ml/model.json', import.meta.url)),
     llm: {
       provider,
       timeoutMs: toPositiveInt(env.LLM_TIMEOUT_MS, 60000),

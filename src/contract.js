@@ -3,7 +3,7 @@ import { z } from 'zod';
 // Contrato compartido por la API y por ambos motores.
 export const CATEGORIES = Object.freeze(['ACCESS', 'BUG', 'FEATURE', 'SECURITY']);
 export const PRIORITIES = Object.freeze(['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']);
-export const MODES = Object.freeze(['traditional', 'generative']);
+export const MODES = Object.freeze(['traditional', 'ml', 'generative']);
 
 export const MESSAGE_MIN_LENGTH = 3;
 export const MESSAGE_MAX_LENGTH = 2000;
@@ -32,7 +32,7 @@ export const AnalyzeRequestSchema = z.strictObject(
           .min(MESSAGE_MIN_LENGTH, `El mensaje debe tener al menos ${MESSAGE_MIN_LENGTH} caracteres`)
           .max(MESSAGE_MAX_LENGTH, `El mensaje no puede superar ${MESSAGE_MAX_LENGTH} caracteres`),
       ),
-    mode: z.enum(MODES, { error: 'El campo "mode" debe ser "traditional" o "generative"' }),
+    mode: z.enum(MODES, { error: 'El campo "mode" debe ser "traditional", "ml" o "generative"' }),
   },
   {
     error: (issue) =>

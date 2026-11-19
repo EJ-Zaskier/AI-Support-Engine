@@ -3,46 +3,63 @@
 > node --env-file-if-exists=.env benchmark/run-benchmark.js
 
 .env not found. Continuing without it.
-API: http://127.0.0.1:50061 | Modelo generativo: ollama / qwen2.5:7b
+API: http://127.0.0.1:59996 | Modelo generativo: ollama / qwen2.5:7b
 Calentando el modelo (la primera carga en GPU no se cuenta en la latencia)...
-# 1 traditional OK  200 ACCESS / MEDIUM (8 ms)
-# 1 generative  OK  200 ACCESS / MEDIUM (1011 ms)
-# 2 traditional MAL 200 BUG / HIGH (4 ms)
-# 2 generative  OK  200 ACCESS / HIGH (893 ms)
+# 1 traditional OK  200 ACCESS / MEDIUM (14 ms)
+# 1 ml          OK  200 ACCESS / MEDIUM (6 ms)
+# 1 generative  OK  200 ACCESS / MEDIUM (1143 ms)
+# 2 traditional MAL 200 BUG / HIGH (6 ms)
+# 2 ml          MAL 200 SECURITY / HIGH (3 ms)
+# 2 generative  OK  200 ACCESS / HIGH (994 ms)
 # 3 traditional OK  200 BUG / HIGH (3 ms)
-# 3 generative  OK  200 BUG / HIGH (999 ms)
-# 4 traditional OK  200 BUG / CRITICAL (2 ms)
-# 4 generative  OK  200 BUG / CRITICAL (876 ms)
+# 3 ml          MAL 200 BUG / MEDIUM (3 ms)
+# 3 generative  OK  200 BUG / HIGH (1100 ms)
+# 4 traditional OK  200 BUG / CRITICAL (3 ms)
+# 4 ml          MAL 200 BUG / HIGH (2 ms)
+# 4 generative  OK  200 BUG / CRITICAL (965 ms)
 # 5 traditional OK  200 FEATURE / LOW (2 ms)
-# 5 generative  OK  200 FEATURE / LOW (778 ms)
-# 6 traditional OK  200 FEATURE / MEDIUM (2 ms)
-# 6 generative  OK  200 FEATURE / MEDIUM (753 ms)
-# 7 traditional OK  200 SECURITY / HIGH (3 ms)
-# 7 generative  OK  200 SECURITY / HIGH (840 ms)
-# 8 traditional MAL 200 BUG / MEDIUM (2 ms)
-# 8 generative  OK  200 SECURITY / CRITICAL (974 ms)
+# 5 ml          OK  200 FEATURE / LOW (3 ms)
+# 5 generative  OK  200 FEATURE / LOW (807 ms)
+# 6 traditional OK  200 FEATURE / MEDIUM (3 ms)
+# 6 ml          OK  200 FEATURE / MEDIUM (2 ms)
+# 6 generative  OK  200 FEATURE / MEDIUM (829 ms)
+# 7 traditional OK  200 SECURITY / HIGH (4 ms)
+# 7 ml          OK  200 SECURITY / HIGH (2 ms)
+# 7 generative  OK  200 SECURITY / HIGH (1029 ms)
+# 8 traditional MAL 200 BUG / MEDIUM (3 ms)
+# 8 ml          MAL 200 SECURITY / HIGH (3 ms)
+# 8 generative  OK  200 SECURITY / CRITICAL (1076 ms)
 # 9 traditional OK  200 BUG / LOW (2 ms)
-# 9 generative  OK  200 BUG / LOW (1954 ms)
-#10 traditional OK  200 BUG / MEDIUM (5 ms)
-#10 generative  MAL 200 BUG / HIGH (819 ms)
-#11 traditional OK  200 SECURITY / HIGH (2 ms)
-#11 generative  OK  200 SECURITY / HIGH (765 ms)
+# 9 ml          MAL 200 BUG / MEDIUM (2 ms)
+# 9 generative  OK  200 BUG / LOW (2172 ms)
+#10 traditional OK  200 BUG / MEDIUM (6 ms)
+#10 ml          MAL 200 ACCESS / MEDIUM (3 ms)
+#10 generative  MAL 200 BUG / HIGH (900 ms)
+#11 traditional OK  200 SECURITY / HIGH (3 ms)
+#11 ml          OK  200 SECURITY / HIGH (2 ms)
+#11 generative  OK  200 SECURITY / HIGH (842 ms)
 #12 traditional MAL 200 BUG / HIGH (2 ms)
-#12 generative  OK  200 BUG / MEDIUM (999 ms)
-#13 traditional OK  200 SECURITY / CRITICAL (2 ms)
-#13 generative  OK  200 SECURITY / CRITICAL (1215 ms)
+#12 ml          OK  200 BUG / MEDIUM (2 ms)
+#12 generative  OK  200 BUG / MEDIUM (1107 ms)
+#13 traditional OK  200 SECURITY / CRITICAL (3 ms)
+#13 ml          MAL 200 SECURITY / HIGH (2 ms)
+#13 generative  OK  200 SECURITY / CRITICAL (1341 ms)
 #14 traditional OK  200 SECURITY / CRITICAL (2 ms)
-#14 generative  OK  200 SECURITY / CRITICAL (1213 ms)
-#15 traditional MAL 200 ACCESS / LOW (1 ms)
-#15 generative  OK  200 FEATURE / LOW (900 ms)
-#16 traditional MAL 200 BUG / MEDIUM (2 ms)
-#16 generative  OK  200 SECURITY / HIGH (1068 ms)
+#14 ml          MAL 200 ACCESS / MEDIUM (2 ms)
+#14 generative  OK  200 SECURITY / CRITICAL (1282 ms)
+#15 traditional MAL 200 ACCESS / LOW (2 ms)
+#15 ml          MAL 200 ACCESS / LOW (2 ms)
+#15 generative  OK  200 FEATURE / LOW (994 ms)
+#16 traditional MAL 200 BUG / MEDIUM (4 ms)
+#16 ml          MAL 200 FEATURE / HIGH (2 ms)
+#16 generative  OK  200 SECURITY / HIGH (968 ms)
 
 Resumen:
 ┌─────────────┬───────────┬─────────────┬─────────────┬─────────────┬──────────────┬─────────────────────┐
 │ (index)     │ correctas │ % correctas │ % categoría │ % prioridad │ % formato OK │ latencia prom. (ms) │
 ├─────────────┼───────────┼─────────────┼─────────────┼─────────────┼──────────────┼─────────────────────┤
-│ traditional │ '11/16'   │ 68.8        │ 75          │ 81.3        │ 100          │ 3                   │
-│ generative  │ '15/16'   │ 93.8        │ 100         │ 93.8        │ 100          │ 1004                │
+│ traditional │ '11/16'   │ 68.8        │ 75          │ 81.3        │ 100          │ 4                   │
+│ ml          │ '6/16'    │ 37.5        │ 68.8        │ 62.5        │ 100          │ 3                   │
+│ generative  │ '15/16'   │ 93.8        │ 100         │ 93.8        │ 100          │ 1097                │
 └─────────────┴───────────┴─────────────┴─────────────┴─────────────┴──────────────┴─────────────────────┘
 Evidencia escrita en evidence/benchmark-results.json y evidence/RESULTADOS.md

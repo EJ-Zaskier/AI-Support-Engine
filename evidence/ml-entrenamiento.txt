@@ -1,0 +1,52 @@
+Entrenamiento: 2026-11-19T23:08:13.771728+00:00
+scikit-learn 1.9.1 | pandas 3.1.1
+Dataset: tickets.csv con 200 solicitudes
+
+Distribución por categoría:
+category
+ACCESS      50
+BUG         50
+FEATURE     50
+SECURITY    50
+
+Distribución por prioridad:
+priority
+MEDIUM      71
+LOW         53
+HIGH        50
+CRITICAL    26
+
+=== Modelo de category (evaluación con 40 solicitudes de prueba) ===
+Línea base (código de la clase, C=1): exactitud 0.575
+Mejores hiperparámetros (validación cruzada 5-fold, 0.631): {'classifier__C': 100, 'classifier__class_weight': None, 'vectorizer__sublinear_tf': False}
+              precision    recall  f1-score   support
+
+      ACCESS       0.67      0.60      0.63        10
+         BUG       0.67      0.60      0.63        10
+     FEATURE       0.78      0.70      0.74        10
+    SECURITY       0.38      0.50      0.43        10
+
+    accuracy                           0.60        40
+   macro avg       0.62      0.60      0.61        40
+weighted avg       0.62      0.60      0.61        40
+
+
+=== Modelo de priority (evaluación con 40 solicitudes de prueba) ===
+Línea base (código de la clase, C=1): exactitud 0.375
+Mejores hiperparámetros (validación cruzada 5-fold, 0.506): {'classifier__C': 10, 'classifier__class_weight': None, 'vectorizer__sublinear_tf': True}
+              precision    recall  f1-score   support
+
+    CRITICAL       0.67      0.40      0.50         5
+        HIGH       0.50      0.20      0.29        10
+         LOW       0.50      0.36      0.42        11
+      MEDIUM       0.36      0.64      0.46        14
+
+    accuracy                           0.42        40
+   macro avg       0.51      0.40      0.42        40
+weighted avg       0.47      0.42      0.41        40
+
+Ejemplo de la clase: "Alguien entró a mi cuenta sin autorización"
+  categoría -> ACCESS
+  prioridad -> MEDIUM
+
+Modelo exportado a ml/model.json

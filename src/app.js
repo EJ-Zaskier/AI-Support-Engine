@@ -37,6 +37,7 @@ export function createApp({ engines, provider, config, logger = console }) {
       status: 'ok',
       engines: {
         traditional: { available: true },
+        ml: engines.ml ? { available: engines.ml.available, ...engines.ml.info } : { available: false },
         generative: { provider: provider?.name, model: provider?.model, ...generative },
       },
     });

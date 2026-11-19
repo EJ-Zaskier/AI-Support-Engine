@@ -28,6 +28,12 @@ export class ProviderError extends AppError {
   }
 }
 
+export class MlModelUnavailableError extends AppError {
+  constructor(message = 'El modelo de Machine Learning no está entrenado. Ejecuta: python ml/train.py', options = {}) {
+    super(message, { status: 503, code: 'ML_MODEL_UNAVAILABLE', ...options });
+  }
+}
+
 export class ModelOutputError extends AppError {
   constructor(message = 'El modelo devolvió una respuesta con formato inválido', options = {}) {
     super(message, { status: 502, code: 'MODEL_INVALID_OUTPUT', ...options });

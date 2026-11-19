@@ -1,8 +1,9 @@
 {
   "meta": {
-    "generatedAt": "2026-11-18T21:24:17.862Z",
+    "generatedAt": "2026-11-19T23:14:34.964Z",
     "provider": "ollama",
     "model": "qwen2.5:7b",
+    "mlModel": "TF-IDF (1-2 gramas) + Regresión Logística · 200 ejemplos · scikit-learn 1.9.1",
     "node": "v24.21.0",
     "platform": "Windows_NT 10.0.26300",
     "criteria": "Correcto = categoría y prioridad coinciden con la referencia definida en benchmark/cases.json"
@@ -16,6 +17,16 @@
       "priorityAccuracyPct": 81.3,
       "formatOkPct": 100,
       "humanReviewFlaggedPct": 100,
+      "avgLatencyMs": 4
+    },
+    "ml": {
+      "total": 16,
+      "correct": 6,
+      "accuracyPct": 37.5,
+      "categoryAccuracyPct": 68.8,
+      "priorityAccuracyPct": 62.5,
+      "formatOkPct": 100,
+      "humanReviewFlaggedPct": 100,
       "avgLatencyMs": 3
     },
     "generative": {
@@ -26,7 +37,7 @@
       "priorityAccuracyPct": 93.8,
       "formatOkPct": 100,
       "humanReviewFlaggedPct": 100,
-      "avgLatencyMs": 1004
+      "avgLatencyMs": 1097
     }
   },
   "results": [
@@ -41,7 +52,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 8,
+        "latencyMs": 14,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -55,9 +66,9 @@
           "mode": "traditional"
         }
       },
-      "generative": {
+      "ml": {
         "status": 200,
-        "latencyMs": 1011,
+        "latencyMs": 6,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -66,7 +77,23 @@
         "output": {
           "category": "ACCESS",
           "priority": "MEDIUM",
-          "response": "Entiendo que estás teniendo problemas para iniciar sesión. A veces, los cambios en la contraseña pueden tardar un poco en actualizarse. Te recomendaría que intentes de nuevo o restablezcas tu contraseña nuevamente.",
+          "response": "Lamentamos el inconveniente para acceder a su cuenta. Verifique que su usuario y contraseña sean correctos y utilice la opción \"¿Olvidó su contraseña?\" para restablecerla. Si el problema continúa, nuestro equipo le ayudará a recuperar el acceso.",
+          "requiresHumanReview": false,
+          "mode": "ml"
+        }
+      },
+      "generative": {
+        "status": 200,
+        "latencyMs": 1143,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": true,
+        "correct": true,
+        "reviewOk": true,
+        "output": {
+          "category": "ACCESS",
+          "priority": "MEDIUM",
+          "response": "Entiendo que estás teniendo problemas para iniciar sesión. A veces, los cambios en la contraseña pueden tardar un poco en actualizarse. Te recomendaría que intentes de nuevo o contactes a soporte para que podamos revisarlo.",
           "requiresHumanReview": false,
           "mode": "generative"
         }
@@ -83,7 +110,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 4,
+        "latencyMs": 6,
         "formatOk": true,
         "categoryOk": false,
         "priorityOk": true,
@@ -97,9 +124,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 3,
+        "formatOk": true,
+        "categoryOk": false,
+        "priorityOk": true,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "SECURITY",
+          "priority": "HIGH",
+          "response": "Gracias por reportar este posible problema de seguridad. El caso fue escalado al equipo de seguridad para revisión humana. Por favor no comparta contraseñas ni datos sensibles por este medio; un especialista le contactará a la brevedad.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 893,
+        "latencyMs": 994,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -139,9 +182,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 3,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": false,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "BUG",
+          "priority": "MEDIUM",
+          "response": "Gracias por reportar esta falla. El incidente quedó registrado y el equipo técnico lo está analizando. Para agilizar la solución, comparta los pasos para reproducirlo, capturas de pantalla y la hora aproximada en que ocurrió.",
+          "requiresHumanReview": false,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 999,
+        "latencyMs": 1100,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -167,7 +226,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 2,
+        "latencyMs": 3,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -181,9 +240,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": false,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "BUG",
+          "priority": "HIGH",
+          "response": "Gracias por reportar esta falla. El incidente quedó registrado y el equipo técnico lo está analizando. Para agilizar la solución, comparta los pasos para reproducirlo, capturas de pantalla y la hora aproximada en que ocurrió.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 876,
+        "latencyMs": 965,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -223,9 +298,9 @@
           "mode": "traditional"
         }
       },
-      "generative": {
+      "ml": {
         "status": 200,
-        "latencyMs": 778,
+        "latencyMs": 3,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -234,7 +309,23 @@
         "output": {
           "category": "FEATURE",
           "priority": "LOW",
-          "response": "Entiendo su solicitud. Exportar los reportes a Excel sería una buena mejora. Estaremos considerando esta funcionalidad para futuras actualizaciones.",
+          "response": "Gracias por su sugerencia. Registramos la solicitud de nueva funcionalidad y será evaluada por el equipo de producto en la próxima planificación. Le notificaremos cualquier avance.",
+          "requiresHumanReview": false,
+          "mode": "ml"
+        }
+      },
+      "generative": {
+        "status": 200,
+        "latencyMs": 807,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": true,
+        "correct": true,
+        "reviewOk": true,
+        "output": {
+          "category": "FEATURE",
+          "priority": "LOW",
+          "response": "Entiendo su solicitud. La funcionalidad de exportación a Excel será considerada para futuras actualizaciones. Gracias por su feedback.",
           "requiresHumanReview": false,
           "mode": "generative"
         }
@@ -251,7 +342,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 2,
+        "latencyMs": 3,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -265,9 +356,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": true,
+        "correct": true,
+        "reviewOk": true,
+        "output": {
+          "category": "FEATURE",
+          "priority": "MEDIUM",
+          "response": "Gracias por su sugerencia. Registramos la solicitud de nueva funcionalidad y será evaluada por el equipo de producto en la próxima planificación. Le notificaremos cualquier avance.",
+          "requiresHumanReview": false,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 753,
+        "latencyMs": 829,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -293,7 +400,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 3,
+        "latencyMs": 4,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -307,9 +414,9 @@
           "mode": "traditional"
         }
       },
-      "generative": {
+      "ml": {
         "status": 200,
-        "latencyMs": 840,
+        "latencyMs": 2,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -318,7 +425,23 @@
         "output": {
           "category": "SECURITY",
           "priority": "HIGH",
-          "response": "Ha encontrado una posible vulnerabilidad en la seguridad de nuestro sistema. Estamos trabajando para corregir esto lo antes posible para proteger sus datos.",
+          "response": "Gracias por reportar este posible problema de seguridad. El caso fue escalado al equipo de seguridad para revisión humana. Por favor no comparta contraseñas ni datos sensibles por este medio; un especialista le contactará a la brevedad.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
+      "generative": {
+        "status": 200,
+        "latencyMs": 1029,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": true,
+        "correct": true,
+        "reviewOk": true,
+        "output": {
+          "category": "SECURITY",
+          "priority": "HIGH",
+          "response": "Ha encontrado una posible vulnerabilidad en la seguridad de nuestro sistema. Estamos trabajando para corregir esto lo antes posible para proteger sus datos. Gracias por informarnos.",
           "requiresHumanReview": true,
           "mode": "generative"
         }
@@ -335,7 +458,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 2,
+        "latencyMs": 3,
         "formatOk": true,
         "categoryOk": false,
         "priorityOk": false,
@@ -349,9 +472,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 3,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": false,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "SECURITY",
+          "priority": "HIGH",
+          "response": "Gracias por reportar este posible problema de seguridad. El caso fue escalado al equipo de seguridad para revisión humana. Por favor no comparta contraseñas ni datos sensibles por este medio; un especialista le contactará a la brevedad.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 974,
+        "latencyMs": 1076,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -391,9 +530,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": false,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "BUG",
+          "priority": "MEDIUM",
+          "response": "Gracias por reportar esta falla. El incidente quedó registrado y el equipo técnico lo está analizando. Para agilizar la solución, comparta los pasos para reproducirlo, capturas de pantalla y la hora aproximada en que ocurrió.",
+          "requiresHumanReview": false,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 1954,
+        "latencyMs": 2172,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -419,7 +574,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 5,
+        "latencyMs": 6,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -433,9 +588,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 3,
+        "formatOk": true,
+        "categoryOk": false,
+        "priorityOk": true,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "ACCESS",
+          "priority": "MEDIUM",
+          "response": "Lamentamos el inconveniente para acceder a su cuenta. Verifique que su usuario y contraseña sean correctos y utilice la opción \"¿Olvidó su contraseña?\" para restablecerla. Si el problema continúa, nuestro equipo le ayudará a recuperar el acceso.",
+          "requiresHumanReview": false,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 819,
+        "latencyMs": 900,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": false,
@@ -461,7 +632,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 2,
+        "latencyMs": 3,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -475,9 +646,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": true,
+        "correct": true,
+        "reviewOk": true,
+        "output": {
+          "category": "SECURITY",
+          "priority": "HIGH",
+          "response": "Gracias por reportar este posible problema de seguridad. El caso fue escalado al equipo de seguridad para revisión humana. Por favor no comparta contraseñas ni datos sensibles por este medio; un especialista le contactará a la brevedad.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 765,
+        "latencyMs": 842,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -517,9 +704,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": true,
+        "correct": true,
+        "reviewOk": true,
+        "output": {
+          "category": "BUG",
+          "priority": "MEDIUM",
+          "response": "Gracias por reportar esta falla. El incidente quedó registrado y el equipo técnico lo está analizando. Para agilizar la solución, comparta los pasos para reproducirlo, capturas de pantalla y la hora aproximada en que ocurrió.",
+          "requiresHumanReview": false,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 999,
+        "latencyMs": 1107,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -545,7 +748,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 2,
+        "latencyMs": 3,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -559,9 +762,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": true,
+        "priorityOk": false,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "SECURITY",
+          "priority": "HIGH",
+          "response": "Gracias por reportar este posible problema de seguridad. El caso fue escalado al equipo de seguridad para revisión humana. Por favor no comparta contraseñas ni datos sensibles por este medio; un especialista le contactará a la brevedad.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 1215,
+        "latencyMs": 1341,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -601,9 +820,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": false,
+        "priorityOk": false,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "ACCESS",
+          "priority": "MEDIUM",
+          "response": "Lamentamos el inconveniente para acceder a su cuenta. Verifique que su usuario y contraseña sean correctos y utilice la opción \"¿Olvidó su contraseña?\" para restablecerla. Si el problema continúa, nuestro equipo le ayudará a recuperar el acceso.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 1213,
+        "latencyMs": 1282,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -612,7 +847,7 @@
         "output": {
           "category": "SECURITY",
           "priority": "CRITICAL",
-          "response": "Lo siento mucho que estés pasando por esto. Es crucial que actúes rápidamente para proteger tu cuenta. Por favor, contáctanos de inmediato para bloquear tu cuenta y evitar que se produzcan más transacciones no autorizadas.",
+          "response": "Lo siento mucho que estés pasando por esto. Es crucial que actúes rápidamente para proteger tu cuenta. Por favor, contáctanos de inmediato para que podamos ayudarte a resolver el problema y asegurar tu cuenta.",
           "requiresHumanReview": true,
           "mode": "generative"
         }
@@ -629,7 +864,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 1,
+        "latencyMs": 2,
         "formatOk": true,
         "categoryOk": false,
         "priorityOk": true,
@@ -643,9 +878,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": false,
+        "priorityOk": true,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "ACCESS",
+          "priority": "LOW",
+          "response": "Lamentamos el inconveniente para acceder a su cuenta. Verifique que su usuario y contraseña sean correctos y utilice la opción \"¿Olvidó su contraseña?\" para restablecerla. Si el problema continúa, nuestro equipo le ayudará a recuperar el acceso.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 900,
+        "latencyMs": 994,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -671,7 +922,7 @@
       },
       "traditional": {
         "status": 200,
-        "latencyMs": 2,
+        "latencyMs": 4,
         "formatOk": true,
         "categoryOk": false,
         "priorityOk": false,
@@ -685,9 +936,25 @@
           "mode": "traditional"
         }
       },
+      "ml": {
+        "status": 200,
+        "latencyMs": 2,
+        "formatOk": true,
+        "categoryOk": false,
+        "priorityOk": true,
+        "correct": false,
+        "reviewOk": true,
+        "output": {
+          "category": "FEATURE",
+          "priority": "HIGH",
+          "response": "Gracias por su sugerencia. Registramos la solicitud de nueva funcionalidad y será evaluada por el equipo de producto en la próxima planificación. Le notificaremos cualquier avance.",
+          "requiresHumanReview": true,
+          "mode": "ml"
+        }
+      },
       "generative": {
         "status": 200,
-        "latencyMs": 1068,
+        "latencyMs": 968,
         "formatOk": true,
         "categoryOk": true,
         "priorityOk": true,
@@ -696,7 +963,7 @@
         "output": {
           "category": "SECURITY",
           "priority": "HIGH",
-          "response": "Entiendo tu solicitud. Para fines de auditoría interna, es importante revisar cuidadosamente la información sensible. ¿Podrías proporcionar más detalles sobre el propósito de esta auditoría y quién la está realizando?",
+          "response": "Entiendo tu solicitud. Para fines de auditoría, necesitamos revisar cuidadosamente los detalles. ¿Podrías proporcionar más contexto sobre por qué necesitas esta información?",
           "requiresHumanReview": true,
           "mode": "generative"
         }

@@ -1,4 +1,11 @@
+const MODE_TITLES = {
+  traditional: 'Motor tradicional (reglas)',
+  ml: 'Motor ML (TF-IDF + Regresión Logística)',
+  generative: 'Motor generativo (LLM)',
+};
+
 const EXAMPLES = [
+  'Alguien entró a mi cuenta sin autorización',
   'No puedo iniciar sesión, me dice que mi contraseña es incorrecta',
   'Todo el sistema de pagos está caído en producción',
   'Sería genial poder exportar los reportes a Excel',
@@ -28,10 +35,11 @@ async function checkHealth() {
   try {
     const { engines } = await (await fetch('/api/health')).json();
     const gen = engines.generative;
-    el.textContent = gen.available
-      ? `Tradicional: listo · Generativo: ${gen.provider} / ${gen.model}`
-      : `Tradicional: listo · Generativo no disponible (${gen.reason})`;
-    el.dataset.state = gen.available ? 'ok' : 'warn';
+    const ml = engines.ml;
+    const mlText = ml.available ? `ML: ${ml.datasetRows} ejemplos` : 'ML: sin entrenar';
+    const genText = gen.available ? `Generativo: ${gen.provider} / ${gen.model}` : `Generativo no disponible (${gen.reason})`;
+    el.textContent = `Tradicional: listo · ${mlText} · ${genText}`;
+    el.dataset.state = gen.available && ml.available ? 'ok' : 'warn';
   } catch {
     el.textContent = 'No se pudo contactar con la API';
     el.dataset.state = 'warn';
@@ -58,8 +66,7 @@ function el(tag, className, text) {
 
 function renderCard({ ok, status, body, ms, mode }) {
   const card = el('article', 'card');
-  const title = mode === 'traditional' ? 'Motor tradicional (reglas)' : 'Motor generativo (LLM)';
-  card.append(el('h2', '', title));
+  card.append(el('h2', '', MODE_TITLES[mode]));
 
   if (!ok) {
     card.classList.add('error');
@@ -92,7 +99,7 @@ async function run(mode) {
   buttons.forEach((b) => (b.disabled = true));
   results.replaceChildren(el('p', 'muted', 'Analizando…'));
   try {
-    const modes = mode === 'both' ? ['traditional', 'generative'] : [mode];
+    const modes = mode === 'all' ? Object.keys(MODE_TITLES) : [mode];
     const outputs = await Promise.all(modes.map((m) => analyze(message, m)));
     results.replaceChildren(...outputs.map(renderCard));
   } catch {

@@ -37,7 +37,7 @@ const SECURITY_SIGNAL_PATTERNS = [
   { id: 'phishing', pattern: /\b(phishing|suplanta\w*)\b/ },
   { id: 'malware', pattern: /\b(malware|ransomware|troyano|virus)\b/ },
   { id: 'data-leak', pattern: /\b(filtra(cion|ron|do|da)|fuga de (datos|informacion)|leak\w*|brecha|breach|exfiltr\w*)\b/ },
-  { id: 'unauthorized-access', pattern: /\b(acceso no autorizado|unauthorized|intrus\w*)\b/ },
+  { id: 'unauthorized-access', pattern: /\b(acceso no autorizado|sin (mi )?autorizacion|unauthorized|intrus\w*)\b/ },
   { id: 'account-takeover', pattern: /\b(me robaron|robo de (cuenta|identidad|datos)|cuenta (comprometida|robada|hackeada))\b/ },
   { id: 'fraud', pattern: /\b(fraude|cargos? no reconocidos?|compras? (no autorizadas?|que no hice))\b/ },
   { id: 'attack', pattern: /\b(ataque|attack|ddos|fuerza bruta|brute ?force|exploit\w*)\b/ },
